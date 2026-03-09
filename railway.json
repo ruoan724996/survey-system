@@ -1,7 +1,12 @@
 {
-  "$schema": "https://railway.app/railpack.schema.json",
+  "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "rootDirectory": "backend"
+    "builder": "NIXPACKS",
+    "buildCommand": "cd backend && npm install"
   },
-  "start": "npm start"
+  "deploy": {
+    "startCommand": "cd backend && npm start",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
 }
