@@ -6,7 +6,7 @@
 
 - **前端页面：** https://ruoan724996.github.io/survey-system/
 - **后端 API：** https://survey-backend-production.up.railway.app
-- **数据查看：** https://baijiubg.feishu.cn/base/MMwsb70JkaDngbs8P5ecXGllnse
+- **数据查看：** https://baijiubg.feishu.cn/base/your-feishu-app-token-here
 
 ## 📁 项目结构
 
@@ -44,9 +44,9 @@ survey-system/
 在 Railway 后台设置以下变量：
 
 ```bash
-FEISHU_APP_ID=cli_a90981de3c78dcc8
-FEISHU_APP_SECRET=RQ0RCFDrxfIelhQvgzHLJbp7C3agHnaq
-FEISHU_APP_TOKEN=MMwsb70JkaDngbs8P5ecXGllnse
+FEISHU_APP_ID=your-feishu-app-id-here
+FEISHU_APP_SECRET=your-feishu-app-secret-here
+FEISHU_APP_TOKEN=your-feishu-app-token-here
 FEISHU_TABLE_ID=tblWbQxbHNiKk5gB
 PORT=3000
 NODE_ENV=production

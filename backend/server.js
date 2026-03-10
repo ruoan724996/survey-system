@@ -8,11 +8,13 @@ const app = express();
 // 从环境变量读取配置（Railway 自动注入）
 const PORT = process.env.PORT || 3000;
 
+// 飞书配置
+// ⚠️ 必须通过 Railway 环境变量配置，不要硬编码！
 const FEISHU_CONFIG = {
-    appId: process.env.FEISHU_APP_ID || 'cli_a90981de3c78dcc8',
-    appSecret: process.env.FEISHU_APP_SECRET || 'RQ0RCFDrxfIelhQvgzHLJbp7C3agHnaq',
-    appToken: process.env.FEISHU_APP_TOKEN || 'MMwsb70JkaDngbs8P5ecXGllnse',
-    tableId: process.env.FEISHU_TABLE_ID || 'tblWbQxbHNiKk5gB'
+    appId: process.env.FEISHU_APP_ID,
+    appSecret: process.env.FEISHU_APP_SECRET,
+    appToken: process.env.FEISHU_APP_TOKEN,
+    tableId: process.env.FEISHU_TABLE_ID
 };
 
 // 中间件

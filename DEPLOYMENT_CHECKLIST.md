@@ -31,9 +31,9 @@
 在 Railway 面板添加以下变量：
 
 ```bash
-FEISHU_APP_ID=cli_a90981de3c78dcc8
-FEISHU_APP_SECRET=RQ0RCFDrxfIelhQvgzHLJbp7C3agHnaq
-FEISHU_APP_TOKEN=MMwsb70JkaDngbs8P5ecXGllnse
+FEISHU_APP_ID=your-feishu-app-id-here
+FEISHU_APP_SECRET=your-feishu-app-secret-here
+FEISHU_APP_TOKEN=your-feishu-app-token-here
 FEISHU_TABLE_ID=tblWbQxbHNiKk5gB
 PORT=3000
 NODE_ENV=production
@@ -67,9 +67,9 @@ const API_BASE_URL = 'https://survey-backend-production.up.railway.app/api';
 
 ```bash
 cd /Users/tianfch/.openclaw/workspace/projects/survey-system
-sealos run -e APP_ID=cli_a90981de3c78dcc8 \
-          -e APP_SECRET=RQ0RCFDrxfIelhQvgzHLJbp7C3agHnaq \
-          -e APP_TOKEN=MMwsb70JkaDngbs8P5ecXGllnse \
+sealos run -e APP_ID=your-feishu-app-id-here \
+          -e APP_SECRET=your-feishu-app-secret-here \
+          -e APP_TOKEN=your-feishu-app-token-here \
           -e TABLE_ID=tblWbQxbHNiKk5gB \
           docker.io/library/node:18
 ```
