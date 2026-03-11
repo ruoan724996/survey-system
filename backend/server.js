@@ -140,11 +140,29 @@ app.post('/api/submit', async (req, res) => {
             fields['部门'] = '未填写';
         }
         
+        // 处理多选字段 - 飞书 API 需要数组格式
+        const multiSelectFields = ['功能类型', '主要帮助', '困难问题', '关注方向'];
+        multiSelectFields.forEach(field => {
+            if (Array.isArray(fields[field])) {
+                // 已经是数组，保持原样
+                if (fields[field].length === 0) {
+                    fields[field] = ['未填写'];
+                }
+            } else if (fields[field]) {
+                // 如果是字符串，转为数组
+                fields[field] = [fields[field]];
+            } else {
+                fields[field] = ['未填写'];
+            }
+        });
+        
+        console.log('📤 提交字段:', Object.keys(fields));
         const result = await submitToFeishu(fields);
         console.log('✅ 提交成功:', result.data.record.id);
         res.json({ success: true, recordId: result.data.record.id });
     } catch (error) {
         console.error('❌ 提交失败:', error.message);
+        console.error('错误堆栈:', error.stack);
         res.status(500).json({ success: false, message: error.message });
     }
 });
