@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大模型培训反馈调查问卷</title>
+    <title>大模型深度交流群 - 成员筛选调研</title>
     <style>
         * {
             margin: 0;
@@ -39,9 +39,18 @@
             margin-bottom: 10px;
         }
 
-        .header p {
-            opacity: 0.9;
+        .header .intro {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: left;
             font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .header .intro strong {
+            color: #ffd700;
         }
 
         .form-container {
@@ -86,7 +95,8 @@
         }
 
         .form-group input[type="text"],
-        .form-group input[type="date"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
         .form-group select,
         .form-group textarea {
             width: 100%;
@@ -108,7 +118,14 @@
 
         .form-group textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
+        }
+
+        .form-group .hint {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
         }
 
         .radio-group,
@@ -141,6 +158,29 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
+        }
+
+        .progress-bar {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 15px 0;
+            border-bottom: 2px solid #e0e0e0;
+            z-index: 100;
+        }
+
+        .progress-bar .progress {
+            height: 6px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+
+        .progress-bar .text {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 8px;
         }
 
         .btn-submit {
@@ -191,6 +231,30 @@
         .success-message p {
             color: #666;
             font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .success-message .next-steps {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .success-message .next-steps h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .success-message .next-steps ol {
+            padding-left: 20px;
+            color: #333;
+        }
+
+        .success-message .next-steps li {
+            margin-bottom: 8px;
         }
 
         .error-message {
@@ -200,10 +264,28 @@
             border-radius: 8px;
             margin-bottom: 20px;
             display: none;
+            position: sticky;
+            top: 70px;
+            z-index: 99;
         }
 
         .error-message.show {
             display: block;
+        }
+
+        .word-count {
+            text-align: right;
+            font-size: 13px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .word-count.warning {
+            color: #e74c3c;
+        }
+
+        .word-count.ok {
+            color: #27ae60;
         }
 
         @media (max-width: 600px) {
@@ -224,8 +306,20 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🤖 大模型培训反馈调查问卷</h1>
-            <p>帮助我们改进培训，更好地支持您的工作</p>
+            <h1>🎯 大模型深度交流群 - 成员筛选调研</h1>
+            <p>寻找志同道合的伙伴，共建高质量技术社群</p>
+            
+            <div class="intro">
+                <strong>📌 建群目的：</strong><br>
+                为了促进大模型技术的深度交流，我们计划组建一个<strong>深度交流群</strong>。本群面向有实际经验和强烈学习意愿的同行，定期组织技术分享、案例研讨和项目合作。<br><br>我们特别希望找到：<br>• <strong>技术实践者</strong> — 有大模型落地经验，愿意分享实战心得<br>• <strong>产品思考者</strong> — 对大模型产品设计、产品规划有独到见解和想法<br>• <strong>项目合作者</strong> — 有明确合作意向，能贡献价值也能从中获益。<br><br>
+                <strong>📧 入群方式：</strong><br>
+                审核通过后将通过<strong>邮箱</strong>发送入群邀请，请务必填写常用邮箱。
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" id="progress" style="width: 0%"></div>
+            <div class="text" id="progress-text">进度：0%</div>
         </div>
 
         <div class="form-container">
@@ -236,315 +330,144 @@
                 <div class="section">
                     <div class="section-title">
                         <span class="emoji">📝</span>
-                        基本信息（可选）
+                        基本信息
                     </div>
 
                     <div class="form-group">
-                        <label>姓名</label>
-                        <input type="text" name="姓名" placeholder="自愿填写，不填也可以">
+                        <label>姓名 <span class="required">*</span></label>
+                        <input type="text" name="姓名" required placeholder="请输入您的姓名">
                     </div>
 
                     <div class="form-group">
-                        <label>部门</label>
-                        <input type="text" name="部门" placeholder="自愿填写，不填也可以">
+                        <label>邮箱 <span class="required">*</span></label>
+                        <input type="email" name="邮箱" required placeholder="请输入常用邮箱，用于接收入群邀请">
+                        <div class="hint">📧 审核通过后将通过此邮箱发送入群邀请</div>
                     </div>
 
                     <div class="form-group">
-                        <label>培训日期 <span class="required">*</span></label>
-                        <input type="date" name="培训日期" required>
+                        <label>微信/手机号</label>
+                        <input type="tel" name="微信手机号" placeholder="方便拉群和日常联系（选填）">
                     </div>
                 </div>
-
-                <!-- 培训内容评价 -->
+                <!-- 参与意愿 -->
                 <div class="section">
                     <div class="section-title">
-                        <span class="emoji">📊</span>
-                        培训内容评价
+                        <span class="emoji">🎯</span>
+                        参与意愿（重要筛选依据）
                     </div>
 
                     <div class="form-group">
-                        <label>培训内容对您工作的帮助程度 <span class="required">*</span></label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="帮助程度" value="1" required> 1 - 帮助很小
+                        <label>为什么想加入深度交流群 <span class="required">*</span></label>
+                        <textarea name="参与动机" required placeholder="请用 1-2 句话说明您的参与动机和期望..." oninput="updateWordCount(this)"></textarea>
+                        <div class="hint">💡 请认真填写，这是重要筛选依据（建议至少 20 字）</div>
+                        <div class="word-count" id="motivation-count">0 字</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>您能分享什么内容或技能（可多选）</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="能分享" value="技术方案分享"> 技术方案分享
                             </label>
-                            <label class="radio-option">
-                                <input type="radio" name="帮助程度" value="2"> 2
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="能分享" value="实战案例分享"> 实战案例分享
                             </label>
-                            <label class="radio-option">
-                                <input type="radio" name="帮助程度" value="3"> 3 - 一般
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="能分享" value="行业洞察"> 行业洞察
                             </label>
-                            <label class="radio-option">
-                                <input type="radio" name="帮助程度" value="4"> 4
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="能分享" value="资源对接"> 资源对接
                             </label>
-                            <label class="radio-option">
-                                <input type="radio" name="帮助程度" value="5"> 5 - 帮助很大
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="能分享" value="活动组织"> 活动组织
+                            </label>
+                            <label class="checkbox-option">
+                                <input type="checkbox" name="能分享" value="其他"> 其他
                             </label>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>内容难度 <span class="required">*</span></label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="内容难度" value="太简单" required> 太简单
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="内容难度" value="刚好" required> 刚好
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="内容难度" value="太难" required> 太难
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>最收获的三个知识点</label>
-                        <textarea name="收获知识点" placeholder="请列出您最有收获的知识点..."></textarea>
                     </div>
                 </div>
 
-                <!-- 大模型应用深度调研 -->
+                <!-- 期望 -->
                 <div class="section">
                     <div class="section-title">
-                        <span class="emoji">🤖</span>
-                        大模型应用深度调研
+                        <span class="emoji">💭</span>
+                        期望与建议
                     </div>
 
                     <div class="form-group">
-                        <label>是否使用大模型做过完整的功能开发 <span class="required">*</span></label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="开发经验" value="是，做过多个项目" required> 是，做过多个项目
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="开发经验" value="是，做过 1-2 个项目"> 是，做过 1-2 个项目
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="开发经验" value="尝试过但未完成"> 尝试过但未完成
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="开发经验" value="没有，仅用于辅助查询"> 没有，仅用于辅助查询
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="开发经验" value="没用过大模型"> 没用过大模型
-                            </label>
-                        </div>
+                        <label>您希望从这个群获得什么？</label>
+                        <textarea name="期望" placeholder="例如：技术交流、项目合作、资源对接等..."></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>主要开发了什么类型的功能（可多选）</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="功能类型" value="数据处理/转换工具"> 数据处理/转换工具
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="功能类型" value="自动化脚本"> 自动化脚本
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="功能类型" value="API 接口服务"> API 接口服务
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="功能类型" value="前端页面/组件"> 前端页面/组件
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="功能类型" value="数据分析报表"> 数据分析报表
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="功能类型" value="文档生成系统"> 文档生成系统
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="功能类型" value="其他"> 其他
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>开发过程中大模型主要帮您做了什么（可多选）</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="主要帮助" value="生成完整代码"> 生成完整代码
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="主要帮助" value="调试/修复 bug"> 调试/修复 bug
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="主要帮助" value="代码优化重构"> 代码优化重构
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="主要帮助" value="写注释/文档"> 写注释/文档
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="主要帮助" value="技术方案设计"> 技术方案设计
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="主要帮助" value="没做过开发"> 没做过开发
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>使用中遇到的主要困难（可多选）</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="困难问题" value="代码质量不稳定"> 代码质量不稳定
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="困难问题" value="复杂逻辑处理不好"> 复杂逻辑处理不好
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="困难问题" value="需要反复调试修改"> 需要反复调试修改
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="困难问题" value="担心安全/合规问题"> 担心安全/合规问题
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="困难问题" value="不知道如何集成到项目"> 不知道如何集成到项目
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="困难问题" value="其他"> 其他
-                            </label>
-                        </div>
+                        <label>其他建议或想说的话</label>
+                        <textarea name="其他建议" placeholder="欢迎提出任何建议..."></textarea>
                     </div>
                 </div>
 
-                <!-- 后续关注方向 -->
-                <div class="section">
-                    <div class="section-title">
-                        <span class="emoji">📈</span>
-                        后续关注方向
-                    </div>
-
-                    <div class="form-group">
-                        <label>您最希望深入了解的大模型方向（可多选）</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="关注方向" value="提示词工程与高级技巧"> 提示词工程与高级技巧
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="关注方向" value="代码辅助开发实战"> 代码辅助开发实战
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="关注方向" value="数据分析与可视化"> 数据分析与可视化
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="关注方向" value="文档自动化处理"> 文档自动化处理
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="关注方向" value="知识库搭建与应用"> 知识库搭建与应用
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="关注方向" value="工作流自动化"> 工作流自动化
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="关注方向" value="本地部署与私有化"> 本地部署与私有化
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="关注方向" value="其他"> 其他
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>希望以什么形式学习</label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="学习形式" value="集中培训"> 集中培训
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="学习形式" value="系列工作坊"> 系列工作坊
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="学习形式" value="在线课程"> 在线课程
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="学习形式" value="案例分享会"> 案例分享会
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="学习形式" value="自学资料"> 自学资料
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>愿意投入的学习时间</label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="学习时间" value="每周 1-2 小时"> 每周 1-2 小时
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="学习时间" value="3-5 小时"> 3-5 小时
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="学习时间" value="5 小时以上"> 5 小时以上
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="学习时间" value="看情况"> 看情况
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 整体满意度 -->
-                <div class="section">
-                    <div class="section-title">
-                        <span class="emoji">⭐</span>
-                        整体满意度
-                    </div>
-
-                    <div class="form-group">
-                        <label>整体满意度 <span class="required">*</span></label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="整体满意度" value="1" required> 1 - 非常不满意
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="整体满意度" value="2"> 2
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="整体满意度" value="3"> 3 - 一般
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="整体满意度" value="4"> 4
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="整体满意度" value="5"> 5 - 非常满意
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>是否会推荐同事参加 <span class="required">*</span></label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="是否推荐" value="是" required> 是
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="是否推荐" value="否"> 否
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>其他建议或反馈</label>
-                        <textarea name="其他建议" placeholder="请留下您的宝贵建议..."></textarea>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-submit">提交问卷</button>
+                <button type="submit" class="btn-submit">提交申请</button>
             </form>
 
             <div id="success-message" class="success-message">
                 <div class="success-icon">✅</div>
-                <h2>提交成功！</h2>
-                <p>感谢您的反馈，我们会认真考虑您的建议！</p>
+                <h2>申请提交成功！</h2>
+                <p>感谢您的认真填写，我们会仔细审核每一份申请。</p>
+                
+                <div class="next-steps">
+                    <h3>📋 后续流程：</h3>
+                    <ol>
+                        <li><strong>审核时间：</strong>1-3 个工作日内完成审核</li>
+                        <li><strong>通知方式：</strong>通过<strong>邮箱</strong>发送入群邀请</li>
+                        <li><strong>入群准备：</strong>请留意邮箱通知，按指引加入深度交流群</li>
+                        <li><strong>未通过说明：</strong>因名额有限，未通过不代表不优秀，后续有其他机会会优先通知</li>
+                    </ol>
+                </div>
+                
+                <p style="margin-top: 20px; color: #666;">
+                    📧 如有问题，请联系：田福成
+                </p>
             </div>
         </div>
     </div>
 
     <script>
-        // 后端 API 配置 - Railway 后端地址
-        const API_BASE_URL = 'https://survey-backend-production.up.railway.app/api';
+        // 后端 API 配置
+        const API_BASE_URL = '/api';
+
+        // 更新进度条
+        function updateProgress() {
+            const form = document.getElementById('survey-form');
+            const requiredFields = form.querySelectorAll('[required]');
+            let filledCount = 0;
+            
+            requiredFields.forEach(field => {
+                if (field.type === 'checkbox' || field.type === 'radio') {
+                    const name = field.name;
+                    const checked = form.querySelector(`[name="${name}"]:checked`);
+                    if (checked) filledCount++;
+                } else if (field.value.trim()) {
+                    filledCount++;
+                }
+            });
+            
+            const percentage = Math.round((filledCount / requiredFields.length) * 100);
+            document.getElementById('progress').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = `进度：${percentage}%`;
+        }
+
+        // 更新字数统计
+        function updateWordCount(textarea) {
+            const count = textarea.value.length;
+            const counter = document.getElementById('motivation-count');
+            counter.textContent = count + ' 字';
+            
+            if (count < 20) {
+                counter.className = 'word-count warning';
+            } else {
+                counter.className = 'word-count ok';
+            }
+        }
 
         // 提交数据到后端
         async function submitToBackend(formData) {
@@ -599,7 +522,7 @@
                 }
                 
                 // 处理多选字段
-                const checkboxFields = ['功能类型', '主要帮助', '困难问题', '关注方向'];
+                const checkboxFields = ['能分享'];
                 checkboxFields.forEach(field => {
                     const values = formData.getAll(field);
                     if (values.length > 0) {
@@ -607,10 +530,8 @@
                     }
                 });
                 
-                // 转换日期为时间戳
-                if (data['培训日期']) {
-                    data['培训日期'] = new Date(data['培训日期']).getTime();
-                }
+                // 添加提交时间
+                data['提交时间'] = new Date().toISOString();
                 
                 console.log('提交数据:', data);
                 
@@ -620,18 +541,20 @@
                 // 显示成功消息
                 e.target.style.display = 'none';
                 successMessage.classList.add('show');
+                window.scrollTo(0, 0);
                 
             } catch (error) {
                 console.error('提交失败:', error);
                 errorMessage.textContent = '提交失败：' + error.message;
                 errorMessage.classList.add('show');
                 submitBtn.disabled = false;
-                submitBtn.textContent = '提交问卷';
+                submitBtn.textContent = '提交申请';
             }
         });
 
-        // 设置默认日期为今天
-        document.querySelector('input[name="培训日期"]').valueAsDate = new Date();
+        // 监听表单变化更新进度
+        document.getElementById('survey-form').addEventListener('change', updateProgress);
+        document.getElementById('survey-form').addEventListener('input', updateProgress);
     </script>
 </body>
 </html>
