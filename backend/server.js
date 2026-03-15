@@ -131,17 +131,14 @@ app.post('/api/submit', async (req, res) => {
     console.log('填写人:', req.body['姓名'] || '匿名');
     
     try {
-        // 处理空值 - 姓名和部门可选
+        // 处理空值 - 姓名为必填
         const fields = { ...req.body };
         if (!fields['姓名'] || fields['姓名'].trim() === '') {
             fields['姓名'] = '匿名';
         }
-        if (!fields['部门'] || fields['部门'].trim() === '') {
-            fields['部门'] = '未填写';
-        }
         
         // 处理多选字段 - 飞书 API 需要数组格式
-        const multiSelectFields = ['功能类型', '主要帮助', '困难问题', '关注方向'];
+        const multiSelectFields = ['能分享'];
         multiSelectFields.forEach(field => {
             if (Array.isArray(fields[field])) {
                 // 已经是数组，保持原样

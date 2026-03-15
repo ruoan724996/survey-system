@@ -1,0 +1,11 @@
+PROJECT_NAME=survey-system
+PROJECT_PURPOSE=培训反馈调查问卷
+DEPLOY_URL=https://ruoan724996.github.io/survey-system/
+BACKEND_URL=https://survey-backend-production.up.railway.app/
+HEALTH_CHECK=/api/health
+GIT_REMOTE=https://github.com/ruoan724996/survey-system
+CREATED=2026-03-07
+OWNER=田福成
+LAST_MODIFIED=2026-03-14
+MODIFIED_BY=AI 助手
+NOTES=后端未部署，仅前端可用
