@@ -363,29 +363,7 @@
                         <div class="word-count" id="motivation-count">0 字</div>
                     </div>
 
-                    <div class="form-group">
-                        <label>您能分享什么内容或技能（可多选）</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="能分享" value="技术方案分享"> 技术方案分享
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="能分享" value="实战案例分享"> 实战案例分享
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="能分享" value="行业洞察"> 行业洞察
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="能分享" value="资源对接"> 资源对接
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="能分享" value="活动组织"> 活动组织
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" name="能分享" value="其他"> 其他
-                            </label>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <!-- 期望 -->
@@ -522,7 +500,8 @@
                 }
                 
                 // 处理多选字段
-                const checkboxFields = ['能分享'];
+                // 当前问卷无多选字段
+                const checkboxFields = [];
                 checkboxFields.forEach(field => {
                     const values = formData.getAll(field);
                     if (values.length > 0) {
